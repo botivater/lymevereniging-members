@@ -36,6 +36,7 @@ WORKDIR /home/node
 COPY --from=builder --chown=node:node /home/node/package.json ./
 COPY --from=builder --chown=node:node /home/node/yarn.lock ./
 COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
+COPY --from=builder --chown=node:node /home/node/templates/ ./templates/
 COPY --from=builder --chown=node:node /home/node/out/ ./out/
 
 # Run the startup script
