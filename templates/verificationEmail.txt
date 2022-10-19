@@ -1,0 +1,12 @@
+Lymevereniging Online Community
+
+Hey <%= fullName %>
+
+Wat leuk dat je lid wilt worden van de Lymevereniging Online Community!
+
+Vul onderstaande code in bij de Lymevereniging Online Community en je krijgt toegang tot de gehele server.
+
+Jouw verificatiecode is: <%= verificationCode %>
+
+Met vriendelijke groet,
+Het Lymevereniging Online Community Team
