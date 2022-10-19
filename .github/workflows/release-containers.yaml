@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         application: ['lymevereniging-member-checker']
-        architecture: ['linux/amd64', 'linux/arm64']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: ${{ matrix.architecture }}
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
