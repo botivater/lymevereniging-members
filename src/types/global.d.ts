@@ -13,6 +13,7 @@ declare global {
 
             GUILD_ID: string;
             GUILD_ROLE_ID: string;
+            GUILD_CHANNEL_ID: string;
 
             MAIL_HOST: string;
             MAIL_PORT: string;

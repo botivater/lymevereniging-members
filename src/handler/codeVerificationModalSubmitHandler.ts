@@ -1,4 +1,4 @@
-import { CacheType, ModalSubmitInteraction } from "discord.js";
+import { CacheType, ModalSubmitInteraction, roleMention, userMention } from "discord.js";
 import { CodeVerificationModalCodeInputID } from "../modal/codeVerificationModal";
 import * as yup from "yup";
 import { redis } from "../redis";
@@ -57,6 +57,27 @@ export const codeVerificationModalSubmitHandler = async (
             return;
         }
 
+        await guild.channels.fetch(process.env.GUILD_CHANNEL_ID);
+        const channel = guild.channels.cache.get(process.env.GUILD_CHANNEL_ID);
+
+        if (!channel) {
+            await interaction.editReply({
+                content:
+                    "Oeps, er is intern iets fout gegaan. Probeer het opnieuw.",
+            });
+
+            return;
+        }
+
+        if (!channel.isTextBased()) {
+            await interaction.editReply({
+                content:
+                    "Oeps, er is intern iets fout gegaan. Probeer het opnieuw.",
+            });
+
+            return;
+        }
+
         await guild.members.fetch();
         const guildMember = guild.members.cache.get(interaction.user.id);
 
@@ -85,6 +106,8 @@ export const codeVerificationModalSubmitHandler = async (
 
         await redis.expire(`verificationCode-${interaction.user.id}`, 0);
         await redis.set(`emailVerified-${interaction.user.id}`, 1);
+
+        await channel.send(`Hey ${roleMention("912362493555400734")}, ${userMention(interaction.user.id)} is geverifieerd.`);
 
         await interaction.editReply({
             content: `Het aanmelden is gelukt! Je krijgt binnen enkele seconden toegang tot de Lymevereniging Online Community.`,
