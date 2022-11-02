@@ -26,6 +26,9 @@ RUN yarn build && yarn install --frozen-lockfile --production
 
 FROM node:18-alpine
 
+LABEL org.opencontainers.image.source "https://github.com/botivater/lymevereniging-members"
+LABEL org.opencontainers.image.description "Lymevereniging Members"
+
 # Set the node environment to production.
 ENV NODE_ENV production
 
