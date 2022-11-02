@@ -12,8 +12,7 @@ jobs:
     strategy:
       matrix:
         application: ['lymevereniging-member-checker']
-    # runs-on: ubuntu-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
