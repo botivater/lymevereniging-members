@@ -1,4 +1,4 @@
-import { Client, userMention } from "discord.js";
+import { Client, italic, userMention } from "discord.js";
 import {
     checkMembershipStatus,
     MembershipStatus,
@@ -54,7 +54,7 @@ export const cronMembershipHandler = async (client: Client) => {
             await client.users.send(userId, {
                 content: `Hey ${userMention(
                     userId
-                )}.\nWe hebben je meerdere keren proberen te contacteren dat je lidmaatschap verlopen is. Omdat je je lidmaatschap niet vernieuwd hebt, hebben we helaas je toegang tot de Lymevereniging Online Community moeten intrekken. Opnieuw lid worden van de Lymevereniging kan via https://lymevereniging.nl/lidmaatschap/, daarna kan je je opnieuw aanmelden voor de Lymevereniging Online Community.\nMisschien tot ziens!`,
+                )}.\nWe hebben je meerdere keren proberen te contacteren dat je lidmaatschap verlopen is. Omdat je je lidmaatschap niet vernieuwd hebt, hebben we helaas je toegang tot de Lymevereniging Online Community moeten intrekken. Opnieuw lid worden van de Lymevereniging kan via https://lymevereniging.nl/lidmaatschap/, daarna kan je je opnieuw aanmelden voor de Lymevereniging Online Community.\nMisschien tot ziens!\n\nDenk je dat dit bericht een foutje is? Neem dan contact op met ons via deze link en dan helpen we je zo snel mogelijk verder: https://discord.com/channels/912355077333868574/991736663875268708/1040989251409547285\n\n${italic('Dit is een automatisch bericht waarop niet gereageerd kan worden.')}`,
             });
 
             await redis.del([
