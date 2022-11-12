@@ -39,7 +39,7 @@ client.once(Events.ClientReady, (c) => {
     await client.login(process.env.DISCORD_BOT_TOKEN);
 
     new CronJob(
-        "* * */12 * * *",
+        "0 0 */12 * * *",
         async () => {
             await cronMembershipHandler(client);
             console.info(
