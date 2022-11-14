@@ -1,4 +1,4 @@
-import { Client, italic, userMention } from "discord.js";
+import { Client, roleMention, userMention } from "discord.js";
 import {
     checkMembershipStatus,
     MembershipStatus,
@@ -16,6 +16,25 @@ export const cronMembershipHandler = async (client: Client) => {
 
     if (!guild) {
         console.warn(`Guild not found with id ${process.env.GUILD_ID}`);
+        return;
+    }
+
+    await guild.channels.fetch(process.env.GUILD_CHANNEL_ID);
+    const channel = guild.channels.cache.get(process.env.GUILD_CHANNEL_ID);
+
+    if (!channel) {
+        console.warn(
+            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw."
+        );
+
+        return;
+    }
+
+    if (!channel.isTextBased()) {
+        console.warn(
+            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw."
+        );
+
         return;
     }
 
@@ -49,19 +68,13 @@ export const cronMembershipHandler = async (client: Client) => {
         const membershipStatus = await checkMembershipStatus(email);
 
         if (membershipStatus === MembershipStatus.INACTIVE) {
-            await guildMember.roles.remove(guildRole);
+            console.info(`User id ${userId} has become inactive`);
 
-            await client.users.send(userId, {
-                content: `Hey ${userMention(
+            await channel.send(
+                `Hey ${roleMention("912362493555400734")}, ${userMention(
                     userId
-                )}.\nWe hebben je meerdere keren proberen te contacteren dat je lidmaatschap verlopen is. Omdat je je lidmaatschap niet vernieuwd hebt, hebben we helaas je toegang tot de Lymevereniging Online Community moeten intrekken. Opnieuw lid worden van de Lymevereniging kan via https://lymevereniging.nl/lidmaatschap/, daarna kan je je opnieuw aanmelden voor de Lymevereniging Online Community.\nMisschien tot ziens!\n\nDenk je dat dit bericht een foutje is? Neem dan contact op met ons via deze link en dan helpen we je zo snel mogelijk verder: https://discord.com/channels/912355077333868574/991736663875268708/1040989251409547285\n\n${italic('Dit is een automatisch bericht waarop niet gereageerd kan worden.')}`,
-            });
-
-            await redis.del([
-                `email-${userId}`,
-                `emailVerified-${userId}`,
-                `verificationCode-${userId}`,
-            ]);
+                )} heeft het lidmaatschap niet verlengd volgens de Lymevereniging ledenlijst.\n\nKlopt dit? Gebruik dan /unverify-member om deze persoon definitief te verwijderen.\nKlopt dit niet? (bijvoorbeeld 100 mensen zouden tegelijk niet meer actief zijn) Meld dit dan zo snel mogelijk!`
+            );
         }
     }
 };

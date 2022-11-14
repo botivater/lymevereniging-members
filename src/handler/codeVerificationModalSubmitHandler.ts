@@ -1,4 +1,9 @@
-import { CacheType, ModalSubmitInteraction, roleMention, userMention } from "discord.js";
+import {
+    CacheType,
+    ModalSubmitInteraction,
+    roleMention,
+    userMention,
+} from "discord.js";
 import { CodeVerificationModalCodeInputID } from "../modal/codeVerificationModal";
 import * as yup from "yup";
 import { redis } from "../redis";
@@ -31,7 +36,8 @@ export const codeVerificationModalSubmitHandler = async (
 
         if (!verificationCode) {
             await interaction.editReply({
-                content: "Oeps, er is geen code gelinkt aan dit account. Probeer het opnieuw.",
+                content:
+                    "Oeps, er is geen code gelinkt aan dit account. Probeer het opnieuw.",
             });
 
             return;
@@ -107,7 +113,11 @@ export const codeVerificationModalSubmitHandler = async (
         await redis.expire(`verificationCode-${interaction.user.id}`, 0);
         await redis.set(`emailVerified-${interaction.user.id}`, 1);
 
-        await channel.send(`Hey ${roleMention("912362493555400734")}, ${userMention(interaction.user.id)} is geverifieerd.`);
+        await channel.send(
+            `Hey ${roleMention("912362493555400734")}, ${userMention(
+                interaction.user.id
+            )} is geverifieerd.`
+        );
 
         await interaction.editReply({
             content: `Het aanmelden is gelukt! Je krijgt binnen enkele seconden toegang tot de Lymevereniging Online Community.`,

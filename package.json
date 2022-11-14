@@ -1,6 +1,6 @@
 {
     "name": "lymevereniging-members",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "description": "Lymevereniging Members Bot",
     "main": "src/index.ts",
     "repository": "https://github.com/botivater/lymevereniging-members.git",
@@ -12,7 +12,8 @@
         "start:dev": "nodemon src/index.ts",
         "build": "tsc",
         "lint": "eslint src/",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "commands:register": "ts-node src/register.ts"
     },
     "dependencies": {
         "axios": "^1.1.3",

@@ -7,10 +7,26 @@ import { codeVerificationButtonHandler } from "../handler/codeVerificationButton
 import { codeVerificationModalSubmitHandler } from "../handler/codeVerificationModalSubmitHandler";
 import { verificationModalSubmitHandler } from "../handler/verificationModalSubmitHandler";
 import { verificationButtonHandler } from "../handler/verificationButtonHandler";
+import { unverifyMemberCommand } from "../command/unverifyMemberCommand";
+import { unverifyMemberChatInputCommandHandler } from "../handler/unverifyMemberChatInputCommandHandler";
 
 export const interactionCreateHandler = async (
     interaction: Interaction<CacheType>
 ) => {
+    if (interaction.isChatInputCommand()) {
+        switch (interaction.commandName) {
+            case unverifyMemberCommand.name:
+                await unverifyMemberChatInputCommandHandler(interaction);
+                break;
+
+            default:
+                console.warn(
+                    `Got unknown command name: ${interaction.commandName}`
+                );
+                break;
+        }
+    }
+
     if (interaction.isButton()) {
         switch (interaction.customId) {
             case VerificationButtonID:
