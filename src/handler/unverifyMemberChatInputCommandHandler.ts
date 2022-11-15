@@ -26,16 +26,6 @@ export const unverifyMemberChatInputCommandHandler = async (
             return;
         }
 
-        await guild.roles.fetch(process.env.GUILD_ROLE_ID);
-        const guildRole = guild.roles.cache.get(process.env.GUILD_ROLE_ID);
-
-        if (!guildRole) {
-            console.warn(
-                `Guild role not found with id ${process.env.GUILD_ROLE_ID}`
-            );
-            return;
-        }
-
         await guild.members.fetch(user.id);
         const guildMember = guild.members.cache.get(user.id);
 
@@ -43,7 +33,9 @@ export const unverifyMemberChatInputCommandHandler = async (
             throw new Error("Guild member could not be found");
         }
 
-        await guildMember.roles.remove(guildRole);
+        guildMember.roles.cache.forEach(async role => {
+            await guildMember.roles.remove(role);
+        })
 
         await guildMember.send({
             content: `Hey ${userMention(
