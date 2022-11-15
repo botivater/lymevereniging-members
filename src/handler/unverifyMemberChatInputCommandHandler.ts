@@ -33,9 +33,7 @@ export const unverifyMemberChatInputCommandHandler = async (
             throw new Error("Guild member could not be found");
         }
 
-        guildMember.roles.cache.forEach(async role => {
-            await guildMember.roles.remove(role);
-        })
+        await guildMember.roles.remove(guildMember.roles.cache);
 
         await guildMember.send({
             content: `Hey ${userMention(
