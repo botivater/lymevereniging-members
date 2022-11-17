@@ -51,6 +51,13 @@ export const cronMembershipHandler = async (client: Client) => {
     await guild.members.fetch();
 
     for (const userId of userIds) {
+        const emailVerified = await redis.get(`emailVerified-${userId}`) || "0";
+        
+        if (!parseInt(emailVerified)) {
+            console.warn(`Email not verified for user ${userId}`);
+            continue;
+        }
+
         const email = await redis.get(`email-${userId}`);
 
         if (!email) {
