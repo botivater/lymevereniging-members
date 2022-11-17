@@ -1,9 +1,17 @@
-import axios from "axios";
-
 export enum MembershipStatus {
     ACTIVE,
     INACTIVE,
 }
+
+type Response = {
+    values: { id: number; status_id: number }[];
+    entity: string;
+    action: string;
+    debug: any;
+    version: number;
+    count: number;
+    countFetched: number;
+};
 
 export const checkMembershipStatus = async (email: string) => {
     if (process.env.API_OVERRIDE && parseInt(process.env.API_OVERRIDE)) {
@@ -23,10 +31,13 @@ export const checkMembershipStatus = async (email: string) => {
         limit: 25,
     };
 
-    const response = await axios.post(
+    const response = await fetch(
         `https://lyme.thiersupport.eu/civicrm/ajax/api4/Membership/get`,
-        new URLSearchParams({ params: JSON.stringify(data) }).toString(),
         {
+            method: "POST",
+            body: new URLSearchParams({
+                params: JSON.stringify(data),
+            }).toString(),
             headers: {
                 "X-Civi-Auth": `Bearer ${process.env.MEMBERSHIP_API_SECRET}`,
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -38,7 +49,9 @@ export const checkMembershipStatus = async (email: string) => {
         throw new Error(`Invalid response code: ${response.status}`);
     }
 
-    return response.data.count > 0
+    const json: Response = await response.json();
+
+    return json.count > 0
         ? MembershipStatus.ACTIVE
         : MembershipStatus.INACTIVE;
 };
