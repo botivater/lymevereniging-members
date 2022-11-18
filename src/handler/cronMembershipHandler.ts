@@ -51,10 +51,17 @@ export const cronMembershipHandler = async (client: Client) => {
     await guild.members.fetch();
 
     for (const userId of userIds) {
-        const emailVerified = await redis.get(`emailVerified-${userId}`) || "0";
+        const emailVerified = parseInt(await redis.get(`emailVerified-${userId}`) || "0");
         
-        if (!parseInt(emailVerified)) {
+        if (emailVerified === 0) {
             console.warn(`Email not verified for user ${userId}`);
+
+            await channel.send(
+                `Hey ${roleMention("912362493555400734")}, ${userMention(
+                    userId
+                )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nMogelijke oorzaken kunnen zijn:\n  - Geen energie meer gehad\n  - Code niet ontvangen (of in spam)\n  - Code verlopen en daarna wat hulpeloos\nProbeer actie te ondernemen via <#1037685006023278653>`
+            );
+
             continue;
         }
 

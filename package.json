@@ -1,6 +1,6 @@
 {
     "name": "lymevereniging-members",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "Lymevereniging Members Bot",
     "main": "src/index.ts",
     "repository": "https://github.com/botivater/lymevereniging-members.git",
