@@ -51,7 +51,5 @@ export const checkMembershipStatus = async (email: string) => {
 
     const json: Response = await response.json();
 
-    return json.count > 0
-        ? MembershipStatus.ACTIVE
-        : MembershipStatus.INACTIVE;
+    return json.count > 0 ? MembershipStatus.ACTIVE : MembershipStatus.INACTIVE;
 };

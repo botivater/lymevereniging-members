@@ -9,9 +9,11 @@ import {
     Routes,
 } from "discord.js";
 import { unverifyMemberCommand } from "./command/unverifyMemberCommand";
+import { checkNowCommand } from "./command/checkNowCommand";
 
 const commands: RESTPutAPIApplicationCommandsJSONBody = [
     unverifyMemberCommand.toJSON(),
+    checkNowCommand.toJSON(),
 ];
 
 const rest = new REST({ version: "10" }).setToken(
