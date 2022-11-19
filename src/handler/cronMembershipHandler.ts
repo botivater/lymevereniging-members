@@ -59,9 +59,9 @@ export const cronMembershipHandler = async (client: Client) => {
             console.warn(`Email not verified for user ${userId}`);
 
             await channel.send(
-                `Hey ${roleMention("912362493555400734")}, ${userMention(
+                `${userMention(
                     userId
-                )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nMogelijke oorzaken kunnen zijn:\n  - Geen energie meer gehad\n  - Code niet ontvangen (of in spam)\n  - Code verlopen en daarna wat hulpeloos\nProbeer actie te ondernemen via <#1037685006023278653>`
+                )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nProbeer actie te ondernemen via <#1037685006023278653>`
             );
 
             continue;
