@@ -5,7 +5,16 @@ import {
 } from "../api/checkMembershipStatus";
 import { redis } from "../redis";
 
-export const cronMembershipHandler = async (client: Client) => {
+export interface CronMembershipHandlerOptions {
+    sendUnverifiedMessages: boolean;
+}
+
+export const cronMembershipHandler = async (
+    client: Client,
+    options: CronMembershipHandlerOptions = {
+        sendUnverifiedMessages: false,
+    }
+) => {
     const userIdKeys = await redis.keys("emailVerified-*");
     const userIds = userIdKeys.map((userIdKey) =>
         userIdKey.replace("emailVerified-", "")
@@ -55,7 +64,7 @@ export const cronMembershipHandler = async (client: Client) => {
             (await redis.get(`emailVerified-${userId}`)) || "0"
         );
 
-        if (emailVerified === 0) {
+        if (emailVerified === 0 && options.sendUnverifiedMessages) {
             console.warn(`Email not verified for user ${userId}`);
 
             await channel.send(

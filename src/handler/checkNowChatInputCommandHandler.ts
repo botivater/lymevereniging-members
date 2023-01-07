@@ -7,7 +7,9 @@ export const checkNowChatInputCommandHandler = async (
     await interaction.deferReply({ ephemeral: true });
 
     try {
-        await cronMembershipHandler(interaction.client);
+        await cronMembershipHandler(interaction.client, {
+            sendUnverifiedMessages: true,
+        });
 
         await interaction.editReply("Check has been completed without errors.");
     } catch (err) {

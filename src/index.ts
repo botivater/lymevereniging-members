@@ -41,7 +41,9 @@ client.once(Events.ClientReady, (c) => {
     new CronJob(
         "0 0 */12 * * *",
         async () => {
-            await cronMembershipHandler(client);
+            await cronMembershipHandler(client, {
+                sendUnverifiedMessages: false,
+            });
             console.info(
                 `Membership cron job completed at ${new Date().toISOString()}`
             );
