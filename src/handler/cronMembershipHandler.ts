@@ -90,6 +90,13 @@ export const cronMembershipHandler = async (
             continue;
         }
 
+        if (!guildMember.roles.cache.has(guildRole.id)) {
+            console.warn(
+                `Guild member does not have role for user id ${userId}`
+            );
+            continue;
+        }
+
         const membershipStatus = await checkMembershipStatus(email);
 
         if (membershipStatus === MembershipStatus.INACTIVE) {
