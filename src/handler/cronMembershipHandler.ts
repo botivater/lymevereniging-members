@@ -64,14 +64,16 @@ export const cronMembershipHandler = async (
             (await redis.get(`emailVerified-${userId}`)) || "0"
         );
 
-        if (emailVerified === 0 && options.sendUnverifiedMessages) {
+        if (emailVerified === 0) {
             console.warn(`Email not verified for user ${userId}`);
 
-            await channel.send(
-                `${userMention(
-                    userId
-                )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nProbeer actie te ondernemen via <#1037685006023278653>`
-            );
+            if (options.sendUnverifiedMessages) {
+                await channel.send(
+                    `${userMention(
+                        userId
+                    )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nProbeer actie te ondernemen via <#1037685006023278653>`
+                );
+            }
 
             continue;
         }
