@@ -10,10 +10,12 @@ import {
 } from "discord.js";
 import { unverifyMemberCommand } from "./command/unverifyMemberCommand";
 import { checkNowCommand } from "./command/checkNowCommand";
+import { resendInitialMessageCommand } from "./command/resendInitialMessageCommand";
 
 const commands: RESTPutAPIApplicationCommandsJSONBody = [
     unverifyMemberCommand.toJSON(),
     checkNowCommand.toJSON(),
+    resendInitialMessageCommand.toJSON(),
 ];
 
 const rest = new REST({ version: "10" }).setToken(

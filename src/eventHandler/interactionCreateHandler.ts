@@ -10,8 +10,9 @@ import { verificationButtonHandler } from "../handler/verificationButtonHandler"
 import { unverifyMemberCommand } from "../command/unverifyMemberCommand";
 import { unverifyMemberChatInputCommandHandler } from "../handler/unverifyMemberChatInputCommandHandler";
 import { checkNowCommand } from "../command/checkNowCommand";
-import { cronMembershipHandler } from "../handler/cronMembershipHandler";
 import { checkNowChatInputCommandHandler } from "../handler/checkNowChatInputCommandHandler";
+import { resendInitialMessageCommand } from "../command/resendInitialMessageCommand";
+import { resendInitialMessageCommandHandler } from "../handler/resendInitialMessageCommandHandler";
 
 export const interactionCreateHandler = async (
     interaction: Interaction<CacheType>
@@ -24,6 +25,10 @@ export const interactionCreateHandler = async (
 
             case checkNowCommand.name:
                 await checkNowChatInputCommandHandler(interaction);
+                break;
+
+            case resendInitialMessageCommand.name:
+                await resendInitialMessageCommandHandler(interaction);
                 break;
 
             default:
