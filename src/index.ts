@@ -38,9 +38,9 @@ client.once(Events.ClientReady, (c) => {
 (async () => {
     await client.login(process.env.DISCORD_BOT_TOKEN);
 
-    new CronJob(
-        "0 0 12 * * 1",
-        async () => {
+    CronJob.from({
+        cronTime: "0 0 12 * * 1",
+        onTick: async () => {
             await cronMembershipHandler(client, {
                 sendUnverifiedMessages: false,
             });
@@ -48,8 +48,7 @@ client.once(Events.ClientReady, (c) => {
                 `Membership cron job completed at ${new Date().toISOString()}`,
             );
         },
-        null,
-        true,
-        process.env.TZ,
-    );
+        start: true,
+        timeZone: process.env.TZ,
+    });
 })();
