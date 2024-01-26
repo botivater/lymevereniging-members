@@ -18,7 +18,7 @@ import path from "path";
 import nodemailer from "nodemailer";
 
 export const verificationModalSubmitHandler = async (
-    interaction: ModalSubmitInteraction<CacheType>
+    interaction: ModalSubmitInteraction<CacheType>,
 ) => {
     await interaction.deferReply();
 
@@ -55,7 +55,7 @@ export const verificationModalSubmitHandler = async (
 
         const messageActionRow =
             new ActionRowBuilder<ButtonBuilder>().addComponents(
-                codeVerificationButton
+                codeVerificationButton,
             );
 
         const randomNumber = randomInt(0, 100000000);
@@ -63,28 +63,28 @@ export const verificationModalSubmitHandler = async (
 
         await redis.set(
             `verificationCode-${interaction.user.id}`,
-            verificationCode
+            verificationCode,
         );
         await redis.expire(
             `verificationCode-${interaction.user.id}`,
-            60 * 60 * 24
+            60 * 60 * 24,
         );
 
         const renderObject = {
             fullName: interaction.user.username,
             verificationCode: `${verificationCode.slice(
                 0,
-                4
+                4,
             )} ${verificationCode.slice(4, 8)}`,
         };
 
         const renderedHtml = await ejs.renderFile(
             path.join(process.env.PWD, "templates/verificationEmail.html"),
-            renderObject
+            renderObject,
         );
         const renderedText = await ejs.renderFile(
             path.join(process.env.PWD, "templates/verificationEmail.txt"),
-            renderObject
+            renderObject,
         );
 
         const mailTransporter = nodemailer.createTransport({

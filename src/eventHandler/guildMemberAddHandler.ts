@@ -5,7 +5,7 @@ export const guildMemberAddHandler = async (member: GuildMember) => {
     await member.createDM();
 
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-        verificationButton
+        verificationButton,
     );
 
     await member.dmChannel?.send({

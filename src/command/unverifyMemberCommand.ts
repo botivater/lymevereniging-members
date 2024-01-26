@@ -8,5 +8,5 @@ export const unverifyMemberCommand = new SlashCommandBuilder()
         new SlashCommandUserOption()
             .setName("user")
             .setDescription("User to unveriy")
-            .setRequired(true)
+            .setRequired(true),
     );

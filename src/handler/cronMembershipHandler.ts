@@ -13,11 +13,11 @@ export const cronMembershipHandler = async (
     client: Client,
     options: CronMembershipHandlerOptions = {
         sendUnverifiedMessages: false,
-    }
+    },
 ) => {
     const userIdKeys = await redis.keys("emailVerified-*");
     const userIds = userIdKeys.map((userIdKey) =>
-        userIdKey.replace("emailVerified-", "")
+        userIdKey.replace("emailVerified-", ""),
     );
 
     await client.guilds.fetch(process.env.GUILD_ID);
@@ -33,7 +33,7 @@ export const cronMembershipHandler = async (
 
     if (!channel) {
         console.warn(
-            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw."
+            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw.",
         );
 
         return;
@@ -41,7 +41,7 @@ export const cronMembershipHandler = async (
 
     if (!channel.isTextBased()) {
         console.warn(
-            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw."
+            "Oeps, er is intern iets fout gegaan. Probeer het opnieuw.",
         );
 
         return;
@@ -52,7 +52,7 @@ export const cronMembershipHandler = async (
 
     if (!guildRole) {
         console.warn(
-            `Guild role not found with id ${process.env.GUILD_ROLE_ID}`
+            `Guild role not found with id ${process.env.GUILD_ROLE_ID}`,
         );
         return;
     }
@@ -61,7 +61,7 @@ export const cronMembershipHandler = async (
 
     for (const userId of userIds) {
         const emailVerified = parseInt(
-            (await redis.get(`emailVerified-${userId}`)) || "0"
+            (await redis.get(`emailVerified-${userId}`)) || "0",
         );
 
         if (emailVerified === 0) {
@@ -70,8 +70,8 @@ export const cronMembershipHandler = async (
             if (options.sendUnverifiedMessages) {
                 await channel.send(
                     `${userMention(
-                        userId
-                    )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nProbeer actie te ondernemen via <#1037685006023278653>`
+                        userId,
+                    )} heeft het email adres waarmee ze bij de Lymevereniging bekend staan nog niet geverifieerd.\nProbeer actie te ondernemen via <#1037685006023278653>`,
                 );
             }
 
@@ -94,7 +94,7 @@ export const cronMembershipHandler = async (
 
         if (!guildMember.roles.cache.has(guildRole.id)) {
             console.warn(
-                `Guild member does not have role for user id ${userId}`
+                `Guild member does not have role for user id ${userId}`,
             );
             continue;
         }
@@ -106,8 +106,8 @@ export const cronMembershipHandler = async (
 
             await channel.send(
                 `Hey ${roleMention("912362493555400734")}, ${userMention(
-                    userId
-                )} heeft het lidmaatschap niet verlengd volgens de Lymevereniging ledenlijst.\n\nKlopt dit? Gebruik dan /unverify-member om deze persoon definitief te verwijderen.\nKlopt dit niet? (bijvoorbeeld 100 mensen zouden tegelijk niet meer actief zijn) Meld dit dan zo snel mogelijk!`
+                    userId,
+                )} heeft het lidmaatschap niet verlengd volgens de Lymevereniging ledenlijst.\n\nKlopt dit? Gebruik dan /unverify-member om deze persoon definitief te verwijderen.\nKlopt dit niet? (bijvoorbeeld 100 mensen zouden tegelijk niet meer actief zijn) Meld dit dan zo snel mogelijk!`,
             );
         }
     }

@@ -15,7 +15,7 @@ import { resendInitialMessageCommand } from "../command/resendInitialMessageComm
 import { resendInitialMessageCommandHandler } from "../handler/resendInitialMessageCommandHandler";
 
 export const interactionCreateHandler = async (
-    interaction: Interaction<CacheType>
+    interaction: Interaction<CacheType>,
 ) => {
     if (interaction.isChatInputCommand()) {
         switch (interaction.commandName) {
@@ -33,7 +33,7 @@ export const interactionCreateHandler = async (
 
             default:
                 console.warn(
-                    `Got unknown command name: ${interaction.commandName}`
+                    `Got unknown command name: ${interaction.commandName}`,
                 );
                 break;
         }
@@ -51,7 +51,7 @@ export const interactionCreateHandler = async (
 
             default:
                 console.warn(
-                    `Got unknown button custom id: ${interaction.customId}`
+                    `Got unknown button custom id: ${interaction.customId}`,
                 );
                 break;
         }
@@ -69,7 +69,7 @@ export const interactionCreateHandler = async (
 
             default:
                 console.warn(
-                    `Got unknown modal custom id: ${interaction.customId}`
+                    `Got unknown modal custom id: ${interaction.customId}`,
                 );
                 break;
         }

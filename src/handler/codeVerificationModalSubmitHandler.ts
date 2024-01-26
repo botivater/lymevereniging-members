@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { redis } from "../redis";
 
 export const codeVerificationModalSubmitHandler = async (
-    interaction: ModalSubmitInteraction<CacheType>
+    interaction: ModalSubmitInteraction<CacheType>,
 ) => {
     await interaction.deferReply();
 
@@ -31,7 +31,7 @@ export const codeVerificationModalSubmitHandler = async (
         }
 
         const verificationCode = await redis.get(
-            `verificationCode-${interaction.user.id}`
+            `verificationCode-${interaction.user.id}`,
         );
 
         if (!verificationCode) {
@@ -115,8 +115,8 @@ export const codeVerificationModalSubmitHandler = async (
 
         await channel.send(
             `Hey ${roleMention("912362493555400734")}, ${userMention(
-                interaction.user.id
-            )} is geverifieerd.`
+                interaction.user.id,
+            )} is geverifieerd.`,
         );
 
         await interaction.editReply({

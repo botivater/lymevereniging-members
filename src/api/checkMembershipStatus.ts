@@ -7,7 +7,7 @@ type Response = {
     values: { id: number; status_id: number }[];
     entity: string;
     action: string;
-    debug: any;
+    debug: unknown;
     version: number;
     count: number;
     countFetched: number;
@@ -42,7 +42,7 @@ export const checkMembershipStatus = async (email: string) => {
                 "X-Civi-Auth": `Bearer ${process.env.MEMBERSHIP_API_SECRET}`,
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-        }
+        },
     );
 
     if (response.status !== 200) {

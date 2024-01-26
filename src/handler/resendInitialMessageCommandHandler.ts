@@ -7,7 +7,7 @@ import {
 import { verificationButton } from "../button/verificationButton";
 
 export const resendInitialMessageCommandHandler = async (
-    interaction: ChatInputCommandInteraction<CacheType>
+    interaction: ChatInputCommandInteraction<CacheType>,
 ) => {
     await interaction.deferReply({ ephemeral: true });
 
@@ -34,7 +34,7 @@ export const resendInitialMessageCommandHandler = async (
         }
 
         const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-            verificationButton
+            verificationButton,
         );
 
         await guildMember.send({

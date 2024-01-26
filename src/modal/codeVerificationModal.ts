@@ -20,7 +20,7 @@ const codeInput = new TextInputBuilder()
 
 const firstActionRow =
     new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
-        codeInput
+        codeInput,
     );
 
 export const codeVerificationModal = new ModalBuilder()

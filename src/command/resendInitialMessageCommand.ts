@@ -8,5 +8,5 @@ export const resendInitialMessageCommand = new SlashCommandBuilder()
         new SlashCommandUserOption()
             .setName("user")
             .setDescription("User to resend the message to")
-            .setRequired(true)
+            .setRequired(true),
     );

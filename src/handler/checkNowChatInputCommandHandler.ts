@@ -2,7 +2,7 @@ import { CacheType, ChatInputCommandInteraction } from "discord.js";
 import { cronMembershipHandler } from "./cronMembershipHandler";
 
 export const checkNowChatInputCommandHandler = async (
-    interaction: ChatInputCommandInteraction<CacheType>
+    interaction: ChatInputCommandInteraction<CacheType>,
 ) => {
     await interaction.deferReply({ ephemeral: true });
 

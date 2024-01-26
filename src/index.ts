@@ -31,7 +31,7 @@ client.once(Events.ClientReady, (c) => {
                 PermissionFlagsBits.EmbedLinks,
                 PermissionFlagsBits.ManageRoles,
             ],
-        })}`
+        })}`,
     );
 });
 
@@ -39,17 +39,17 @@ client.once(Events.ClientReady, (c) => {
     await client.login(process.env.DISCORD_BOT_TOKEN);
 
     new CronJob(
-        "0 0 */12 * * *",
+        "0 0 12 * * 1",
         async () => {
             await cronMembershipHandler(client, {
                 sendUnverifiedMessages: false,
             });
             console.info(
-                `Membership cron job completed at ${new Date().toISOString()}`
+                `Membership cron job completed at ${new Date().toISOString()}`,
             );
         },
         null,
         true,
-        process.env.TZ
+        process.env.TZ,
     );
 })();

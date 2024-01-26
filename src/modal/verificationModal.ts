@@ -19,7 +19,7 @@ const emailInput = new TextInputBuilder()
 
 const firstActionRow =
     new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
-        emailInput
+        emailInput,
     );
 
 export const verificationModal = new ModalBuilder()

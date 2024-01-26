@@ -19,13 +19,13 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
 ];
 
 const rest = new REST({ version: "10" }).setToken(
-    process.env.DISCORD_BOT_TOKEN
+    process.env.DISCORD_BOT_TOKEN,
 );
 
 (async () => {
     try {
         console.log(
-            `Started refreshing ${commands.length} application (/) commands.`
+            `Started refreshing ${commands.length} application (/) commands.`,
         );
 
         if (
@@ -36,19 +36,19 @@ const rest = new REST({ version: "10" }).setToken(
                 RESTPutAPIApplicationCommandsResult
             >await rest.put(
                 Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID),
-                { body: commands }
+                { body: commands },
             );
 
             await rest.put(
                 Routes.applicationGuildCommands(
                     process.env.DISCORD_APPLICATION_ID,
-                    process.env.GUILD_ID || ""
+                    process.env.GUILD_ID || "",
                 ),
-                { body: [] }
+                { body: [] },
             );
 
             console.log(
-                `Successfully reloaded ${data.length} application (/) commands.`
+                `Successfully reloaded ${data.length} application (/) commands.`,
             );
         } else {
             // The put method is used to fully refresh all commands in the guild with the current set
@@ -56,14 +56,14 @@ const rest = new REST({ version: "10" }).setToken(
                 await rest.put(
                     Routes.applicationGuildCommands(
                         process.env.DISCORD_APPLICATION_ID,
-                        process.env.GUILD_ID || ""
+                        process.env.GUILD_ID || "",
                     ),
-                    { body: commands }
+                    { body: commands },
                 )
             );
 
             console.log(
-                `Successfully reloaded ${data.length} application (/) commands.`
+                `Successfully reloaded ${data.length} application (/) commands.`,
             );
         }
     } catch (error) {
